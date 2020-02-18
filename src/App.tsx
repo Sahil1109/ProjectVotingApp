@@ -12,17 +12,14 @@ const App: React.FC = () => {
       <AuthenticationContext>
         <Context.Consumer>
           {value => {
-            return (
-              <div>
-                {value ? (
-                  <Switch>
-                    <Route path="/dashboard" component={PrivateRoutes} />
-                  </Switch>
-                ) : (
-                  <PublicRoutes />
-                )}
-              </div>
-            );
+            if (value) {
+              return (
+                <Switch>
+                  <Route path="/dashboard" component={PrivateRoutes} />
+                </Switch>
+              );
+            }
+            return <PublicRoutes />;
           }}
         </Context.Consumer>
       </AuthenticationContext>

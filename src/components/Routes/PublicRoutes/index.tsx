@@ -1,37 +1,15 @@
 import * as React from "react";
-import LoginPage from "../../../pages/LoginPage";
-import { Paper, Grid } from "@material-ui/core";
-
+import { Switch, Route, Redirect } from "react-router-dom";
+import Login from "../../Login";
 
 interface PublicRoutesProps {}
 
 const PublicRoutes: React.FC<PublicRoutesProps> = () => {
   return (
-    <Paper
-      style={{
-        border: "1px solid orange",
-        height: "100vh",
-        width: "100vw",
-        padding: "1em"
-      }}
-    >
-      <Grid
-        style={{ height: "100%", border: "2px dashed orange" }}
-        container
-        justify="center"
-      >
-        <Grid item sm={12}>
-          <b>
-            <h1 style={{ textAlign: "center", margin: "1em 0em 0em 0em" }}>
-              Project Voting
-            </h1>
-          </b>
-        </Grid>
-        <Grid item sm={12} container justify={"center"}>
-          <LoginPage />
-        </Grid>
-      </Grid>
-    </Paper>
+    <Switch>
+      <Route path={["/login"]} component={Login} />
+      <Redirect from="/" to="/login" />
+    </Switch>
   );
 };
 
