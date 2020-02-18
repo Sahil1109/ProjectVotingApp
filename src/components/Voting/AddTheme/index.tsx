@@ -21,7 +21,7 @@ const AddThemeDialog: React.FC = () => {
 
   const handleOnClose = React.useCallback(() => {
     router.history.goBack();
-  }, []);
+  }, [router.history]);
 
   const handleAddTheme = React.useCallback(async () => {
     if (user !== null && user.email !== null) {

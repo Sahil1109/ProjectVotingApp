@@ -13,7 +13,7 @@ const Login: React.FC<ILoginProps> = () => {
     displayState => {
       setDisplayLogin(displayState);
     },
-    [displayLogin]
+    []
   );
 
   const handleLoading = React.useCallback(

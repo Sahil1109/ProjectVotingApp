@@ -1,14 +1,13 @@
 import * as React from "react";
-import { RouteComponentProps } from "react-router";
-import Header from "../../Header";
-import Voting from "../../Voting";
+import { Redirect, Switch, Route } from "react-router-dom";
+import Home from "../../../pages/Home";
 
-const PrivateRoutes: React.FC<RouteComponentProps> = props => {
+const PrivateRoutes: React.FC = () => {
   return (
-    <div>
-      <Header />
-      <Voting />
-    </div>
+    <Switch>
+      <Route path="/dashboard" component={Home} />
+      <Redirect from="/" to="/dashboard" />
+    </Switch>
   );
 };
 

@@ -8,8 +8,7 @@ import {
   Dialog,
   DialogTitle,
   DialogContent,
-  DialogActions,
-  LinearProgress
+  DialogActions
 } from "@material-ui/core";
 
 export class FirebaseAuth {
@@ -66,7 +65,6 @@ const AuthenticationContext: React.FC<BrowserRouterProps> = props => {
   const history = router.history;
 
   const [user, setUser] = React.useState<app.User | null>(null);
-  const [loading, setLoading] = React.useState<boolean>(true);
 
   const handleAuthChange = React.useCallback(
     async (newUser: app.User | null) => {

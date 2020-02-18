@@ -19,7 +19,7 @@ const Header: React.FC = () => {
     await FirebaseAuth.Singleton().signOutGoogle();
     history.replace("/");
     window.location.reload();
-  }, []);
+  }, [history]);
 
   return (
     <Paper>

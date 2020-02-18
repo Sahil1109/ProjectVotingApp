@@ -1,7 +1,7 @@
 import * as React from "react";
 import { Grid } from "@material-ui/core";
 import Themes from "./Themes";
-import { Route, __RouterContext } from "react-router";
+import { Route } from "react-router-dom";
 import { Link } from "react-router-dom";
 import AddThemeDialog from "./AddTheme";
 import { classes } from "./style";

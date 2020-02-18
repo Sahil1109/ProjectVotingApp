@@ -1,5 +1,5 @@
 import * as React from "react";
-import { BrowserRouter, Route, Switch } from "react-router-dom";
+import { BrowserRouter } from "react-router-dom";
 import PublicRoutes from "./components/Routes/PublicRoutes";
 import PrivateRoutes from "./components/Routes/PrivateRoutes";
 import AuthenticationContext, {
@@ -13,11 +13,7 @@ const App: React.FC = () => {
         <Context.Consumer>
           {value => {
             if (value) {
-              return (
-                <Switch>
-                  <Route path="/dashboard" component={PrivateRoutes} />
-                </Switch>
-              );
+              return <PrivateRoutes />;
             }
             return <PublicRoutes />;
           }}
