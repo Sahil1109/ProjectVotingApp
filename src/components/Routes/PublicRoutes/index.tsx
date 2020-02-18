@@ -23,10 +23,9 @@ const PublicRoutes: React.FC<PublicRoutesProps> = () => {
         <Grid item sm={12}>
           <b>
             <h1 style={{ textAlign: "center", margin: "1em 0em 0em 0em" }}>
-              Blockathon
+              Project Voting
             </h1>
           </b>
-          <h3 style={{ textAlign: "center" }}>2.0</h3>
         </Grid>
         <Grid item sm={12} container justify={"center"}>
           <LoginPage />
