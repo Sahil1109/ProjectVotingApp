@@ -1,3 +1,8 @@
 node_modules
 build
 firebaseConfig.ts
+
+.firebase/**/*
+
+.firebaserc
+firebaseConfig
