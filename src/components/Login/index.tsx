@@ -24,21 +24,21 @@ const Login: React.FC<ILoginProps> = () => {
   return (
     <Paper
       style={{
-        border: "1px solid orange",
+        border: "3px solid rgb(127,0,255)",
         height: "100vh",
         width: "100vw",
         padding: "1em"
       }}
     >
       <Grid
-        style={{ height: "100%", border: "2px dashed orange" }}
+        style={{ height: "100%", border: "2px solid rgb(49,0,72)" }}
         container
         justify="center"
       >
         <Grid item sm={12}>
           <b>
             <h1 style={{ textAlign: "center", margin: "1em 0em 0em 0em" }}>
-              Project Voting
+              Project Ideas Voting
             </h1>
           </b>
         </Grid>
