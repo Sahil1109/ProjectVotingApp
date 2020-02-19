@@ -6,7 +6,7 @@ export const classes = {
   `,
   borderBottom: css`
     padding-bottom: 1em;
-    border-bottom: 2px dashed grey;
+    border-bottom: 2px dashed black;
   `,
   addThemeTitle: css`
     margin: 0;

@@ -64,7 +64,7 @@ const AddThemeDialog: React.FC = () => {
         style={{
           marginTop: "1em",
           paddingTop: "1em",
-          borderTop: "1px dashed orange"
+          borderTop: "2px solid rgb(49,0,72)"
         }}
       >
         <button onClick={handleAddTheme}>Add</button>
