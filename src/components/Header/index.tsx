@@ -1,8 +1,8 @@
-import * as React from "react";
-import { Grid, Paper } from "@material-ui/core";
-import { Context, FirebaseAuth } from "../AuthenticationContext";
-import { __RouterContext } from "react-router";
-import { css } from "emotion";
+import * as React from 'react';
+import { Grid, Paper } from '@mui/material';
+import { Context, FirebaseAuth } from '../AuthenticationContext';
+import { useNavigate } from 'react-router-dom';
+import { css } from '@emotion/css';
 
 const classes = {
   email: css`
@@ -12,14 +12,13 @@ const classes = {
 
 const Header: React.FC = () => {
   const context = React.useContext(Context);
-  const router = React.useContext(__RouterContext);
-  const history = router.history;
+  const navigate = useNavigate();
 
   const handleSignout = React.useCallback(async () => {
     await FirebaseAuth.Singleton().signOutGoogle();
-    history.replace("/");
+    navigate('/');
     window.location.reload();
-  }, [history]);
+  }, [navigate]);
 
   return (
     <Paper>
@@ -30,9 +29,9 @@ const Header: React.FC = () => {
             <b>{context!.displayName}</b>
           </h4>
         </Grid>
-        <Grid item xs={2} container justify={"center"} alignItems={"center"}>
+        <Grid item xs={2} container justifyContent="center" alignItems="center">
           <button
-            style={{ border: "1px orange solid", padding: "5px" }}
+            style={{ border: '1px orange solid', padding: '5px' }}
             onClick={handleSignout}
           >
             Sneek Out

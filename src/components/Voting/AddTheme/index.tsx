@@ -1,27 +1,23 @@
-import React from "react";
-
-import { __RouterContext } from "react-router";
-
-import { addTheme } from "../../../services";
-
+import React from 'react';
+import { useNavigate } from 'react-router-dom';
+import { addTheme } from '../../../services';
 import {
   Dialog,
   DialogTitle,
   DialogContent,
   TextField,
   DialogActions
-} from "@material-ui/core";
-import { Context } from "../../AuthenticationContext";
+} from '@mui/material';
+import { Context } from '../../AuthenticationContext';
 
 const AddThemeDialog: React.FC = () => {
-  const router = React.useContext(__RouterContext);
+  const navigate = useNavigate();
   const user = React.useContext(Context);
-
   const [themeName, setThemeName] = React.useState<string>();
 
   const handleOnClose = React.useCallback(() => {
-    router.history.goBack();
-  }, [router.history]);
+    navigate(-1);
+  }, [navigate]);
 
   const handleAddTheme = React.useCallback(async () => {
     if (user !== null && user.email !== null) {
@@ -34,27 +30,27 @@ const AddThemeDialog: React.FC = () => {
         }
       }
     }
-  }, [themeName]);
+  }, [themeName, user, handleOnClose]);
 
   const handleFieldChange = React.useCallback(
-    event => {
+    (event: React.ChangeEvent<HTMLInputElement>) => {
       setThemeName(event.target.value);
     },
-    [themeName]
+    []
   );
 
   return (
     <Dialog open={true} onClose={handleOnClose}>
       <DialogTitle>
-        <h4 style={{ margin: "0em" }}>Add a new theme</h4>
+        <h4 style={{ margin: '0em' }}>Add a new theme</h4>
       </DialogTitle>
       <DialogContent>
         <TextField
-          label={<h5 style={{ margin: "0em" }}>Title</h5>}
-          value={themeName}
+          label={<h5 style={{ margin: '0em' }}>Title</h5>}
+          value={themeName ?? ''}
           onChange={handleFieldChange}
           helperText={
-            <h6 style={{ margin: "0em" }}>
+            <h6 style={{ margin: '0em' }}>
               Please enter a suitable title for your theme
             </h6>
           }
@@ -62,9 +58,9 @@ const AddThemeDialog: React.FC = () => {
       </DialogContent>
       <DialogActions
         style={{
-          marginTop: "1em",
-          paddingTop: "1em",
-          borderTop: "2px solid rgb(49,0,72)"
+          marginTop: '1em',
+          paddingTop: '1em',
+          borderTop: '2px solid rgb(49,0,72)'
         }}
       >
         <button onClick={handleAddTheme}>Add</button>

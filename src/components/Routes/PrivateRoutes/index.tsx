@@ -1,13 +1,13 @@
-import * as React from "react";
-import { Redirect, Switch, Route } from "react-router-dom";
-import Home from "../../../pages/Home";
+import * as React from 'react';
+import { Routes, Route, Navigate } from 'react-router-dom';
+import Home from '../../../pages/Home';
 
 const PrivateRoutes: React.FC = () => {
   return (
-    <Switch>
-      <Route path="/dashboard" component={Home} />
-      <Redirect from="/" to="/dashboard" />
-    </Switch>
+    <Routes>
+      <Route path="/dashboard/*" element={<Home />} />
+      <Route path="*" element={<Navigate to="/dashboard" replace />} />
+    </Routes>
   );
 };
 

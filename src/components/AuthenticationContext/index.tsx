@@ -1,46 +1,45 @@
-import * as React from "react";
-import { auth, Unsubscribe } from "firebase/app";
-import app from "../../utils/firebase";
-import { __RouterContext, Route } from "react-router";
-import { BrowserRouterProps, Link } from "react-router-dom";
-
+import * as React from 'react';
 import {
-  Dialog,
-  DialogTitle,
-  DialogContent,
-  DialogActions
-} from "@material-ui/core";
+  GoogleAuthProvider,
+  signInWithRedirect,
+  signOut,
+  onAuthStateChanged,
+  User
+} from 'firebase/auth';
+import { auth } from '../../utils/firebase';
+import { useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
+import { Dialog, DialogTitle, DialogContent, DialogActions } from '@mui/material';
 
 export class FirebaseAuth {
-  private provider: auth.GoogleAuthProvider | undefined;
+  private provider: GoogleAuthProvider;
   private static firebaseInstance: FirebaseAuth | undefined;
 
   constructor() {
-    this.provider = new app.auth.GoogleAuthProvider();
+    this.provider = new GoogleAuthProvider();
   }
 
   static Singleton() {
     if (this.firebaseInstance === undefined) {
       this.firebaseInstance = new FirebaseAuth();
-      return this.firebaseInstance;
     }
     return this.firebaseInstance;
   }
 
   public async signOutGoogle() {
-    await app.auth().signOut();
+    await signOut(auth);
   }
 
   public async signInGoogle() {
-    await app.auth().signInWithRedirect(this.provider!);
+    await signInWithRedirect(auth, this.provider);
   }
 }
 
-const EmailAlert: React.FC = () => {
-  const router = React.useContext(__RouterContext);
+export const EmailAlert: React.FC = () => {
+  const navigate = useNavigate();
   const handleAlertClose = React.useCallback(() => {
-    router.history.push("/");
-  }, [router.history]);
+    navigate('/');
+  }, [navigate]);
   return (
     <Dialog open={true} onClose={handleAlertClose}>
       <DialogTitle>Sorry</DialogTitle>
@@ -56,56 +55,36 @@ const EmailAlert: React.FC = () => {
   );
 };
 
-export const Context = React.createContext<app.User | null>(null);
+export const Context = React.createContext<User | null>(null);
 
-const AuthenticationContext: React.FC<BrowserRouterProps> = props => {
-  const { children } = props;
-
-  const router = React.useContext(__RouterContext);
-  const history = router.history;
-
-  const [user, setUser] = React.useState<app.User | null>(null);
+const AuthenticationContext: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+  const navigate = useNavigate();
+  const [user, setUser] = React.useState<User | null>(null);
 
   const handleAuthChange = React.useCallback(
-    async (newUser: app.User | null) => {
+    async (newUser: User | null) => {
       if (newUser) {
         if (
-          newUser!.email!.includes("@block8.io") ||
-          newUser!.email!.includes("@block8.com")
+          newUser.email!.includes('@block8.io') ||
+          newUser.email!.includes('@block8.com')
         ) {
           setUser(newUser);
-          history.push("/dashboard");
+          navigate('/dashboard');
         } else {
           await FirebaseAuth.Singleton().signOutGoogle();
-          history.push("/not-b8");
+          navigate('/not-b8');
         }
       }
     },
-    []
+    [navigate]
   );
 
-  let authObserver: Unsubscribe | undefined;
-
   React.useEffect(() => {
-    authObserver = app
-      .auth()
-      .onAuthStateChanged(tempUser => handleAuthChange(tempUser));
-  }, []);
+    const unsubscribe = onAuthStateChanged(auth, handleAuthChange);
+    return unsubscribe;
+  }, [handleAuthChange]);
 
-  React.useEffect(() => {
-    return () => {
-      if (authObserver !== undefined) {
-        authObserver();
-      }
-    };
-  }, []);
-
-  return (
-    <>
-      <Route path="/not-b8" component={EmailAlert} />
-      <Context.Provider value={user}>{children}</Context.Provider>
-    </>
-  );
+  return <Context.Provider value={user}>{children}</Context.Provider>;
 };
 
 export default AuthenticationContext;

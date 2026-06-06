@@ -1,15 +1,15 @@
-import * as React from "react";
-import { Switch, Route, Redirect } from "react-router-dom";
-import Login from "../../Login";
+import * as React from 'react';
+import { Routes, Route, Navigate } from 'react-router-dom';
+import Login from '../../Login';
+import { EmailAlert } from '../../AuthenticationContext';
 
-interface PublicRoutesProps {}
-
-const PublicRoutes: React.FC<PublicRoutesProps> = () => {
+const PublicRoutes: React.FC = () => {
   return (
-    <Switch>
-      <Route path={["/login"]} component={Login} />
-      <Redirect from="/" to="/login" />
-    </Switch>
+    <Routes>
+      <Route path="/login" element={<Login />} />
+      <Route path="/not-b8" element={<EmailAlert />} />
+      <Route path="*" element={<Navigate to="/login" replace />} />
+    </Routes>
   );
 };
 
